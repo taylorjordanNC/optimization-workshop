@@ -1,13 +1,13 @@
 name: modules
 title: LLM optimization and inferencing
-version: master
+version: main
 nav:
   - modules/ROOT/nav.adoc
 
 asciidoc:
   attributes:
     lab_name: "LLM Optimization and Inferencing"
-    release-version: master
+    release-version: main
     page-pagination: true
     my_var: "foo"
     guid: my-guid
