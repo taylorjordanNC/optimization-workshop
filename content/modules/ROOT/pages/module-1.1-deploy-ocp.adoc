@@ -18,7 +18,7 @@ Clone the following repository, you will use it a lot over the course of our tra
 
 [source,sh,role=execute]
 ----
-git clone https://github.com/cskidmo/Intel_ETX_OCPAI_VLLM
-cd Intel_ETX_OCPAI_VLLM
+git clone https://github.com/taylorjordanNC/optimization-workshop
+cd optimization-workshop
 ----
 
