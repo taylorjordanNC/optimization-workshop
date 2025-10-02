@@ -1,0 +1,42 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: guidellm-benchmark-run-
+spec:
+  params:
+    - name: target
+      value: 'http://granite-8b-predictor.llm-hosting.svc.cluster.local:8080/v1'
+    - name: model-name
+      value: granite-8b
+    - name: processor
+      value: ibm-granite/granite-3.3-2b-instruct
+    - name: data-config
+      value: "prompt_tokens=800,output_tokens=128"
+    - name: max-seconds
+      value: '30'
+    - name: rate-type
+      value: poisson
+    - name: rate
+      value: '1.0, 4.0, 8.0, 16.0'
+    - name: api-key
+      value: ''
+    - name: max-concurrency
+      value: '32'
+    - name: huggingface-token
+      value: ''
+    - name: minio-api-route
+      value: 'http://minio.ic-shared-minio.svc.cluster.local:9000'
+    - name: user
+      value: minio
+    - name: password
+      value: minio123
+  pipelineRef:
+    name: guidellm-benchmark-pipeline
+  taskRunTemplate:
+    serviceAccountName: pipeline
+  timeouts:
+    pipeline: 1h0m0s
+  workspaces:
+    - name: shared-workspace
+      persistentVolumeClaim:
+        claimName: guidellm-output-pvc

@@ -1,0 +1,25 @@
+:imagesdir: ../assets/images
+[#deploy-intro]
+= Module 1: LLM Deployment Strategies
+
+== Introduction
+
+This module covers deploying Red Hat Inference Server (vLLM) on OpenShift AI with one L4 powered gpu node.
+
+## Deployment Targets
+
+**OpenShift AI (1.2)**: Managed AI platform providing MLOps capabilities, data science workflows, and enterprise governance. Optimal for integrated AI pipelines and managed model serving.
+
+## Learning Objectives
+
+- Deploy vLLM on OpenShift AI
+- Understand platform-specific configuration requirements
+- Establish foundation for performance evaluation and optimization
+
+## Prerequisites
+
+- Access to target deployment environments
+- Basic familiarity with containers and Kubernetes concepts
+- Understanding of LLM serving requirements
+
+Ready to deploy? Let's start with platform-specific implementations.

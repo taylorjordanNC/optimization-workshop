@@ -1,0 +1,84 @@
+= ETX AI Presales Workshop
+
+Welcome to our ETX AI Presales hands-on workshop! This comprehensive program takes you through the complete lifecycle of enterprise AI deployment - from initial model serving to advanced agentic automation.
+
+== Module Overview
+
+This workshop provides hands-on experience with enterprise AI deployment, evaluation, optimization, and advanced use cases. You'll learn to deploy models efficiently, evaluate performance, implement optimization techniques, build scalable model services, and create intelligent agentic systems.
+
+=== 🚀 Module 1: vLLM Deployment
+**Deploy inference servers on enterprise-grade platforms**
+
+* **1.1 OpenShift Deployment**: Deploy using Helm charts and container orchestration for scalable inference
+* **1.2 OpenShift AI Deployment**: Leverage Red Hat OpenShift AI platform for managed LLM serving with enterprise features
+* **1.3 Deployment Wrap-up**: Compare deployment approaches and establish best practices
+
+**Key Skills**: Container orchestration, cloud-native deployment, platform selection, enterprise AI infrastructure
+
+=== 📊 Module 2: Performance & Accuracy Evaluation  
+**Measure and benchmark LLM systems for production readiness**
+
+* **2.1 Performance Evaluation**: Use GuideLLM to measure latency, throughput, and resource utilization under realistic workloads
+* **2.2 Accuracy Assessment**: Evaluate model quality using ARC-Easy benchmarks and establish quality baselines
+* **2.3 Evaluation Best Practices**: Establish benchmarking workflows and continuous performance monitoring
+
+**Key Skills**: Performance testing, quality assessment, benchmarking methodologies, production readiness validation
+
+=== ⚡ Module 3: vLLM Optimization
+**Maximize inference performance through tuning and configuration**
+
+* **3.1 Performance Tuning**: Hands-on optimization of granite-3.3-8b-instruct for minimal latency and maximum throughput
+* **3.2 Optimization Conclusion**: Review optimization strategies and establish performance baselines
+
+**Key Skills**: Performance optimization, parameter tuning, inference scaling, latency reduction
+
+=== 🏗️ Module 4: Model-as-a-Service Infrastructure (Optional for TL2 Participants)
+**Build centralized, scalable model serving platforms**
+
+* **4.1 MaaS Model Setup**: Deploy and manage centralized model endpoints for enterprise consumption
+* **4.2 API Gateway Integration**: Implement secure, governed access to model services
+* **4.3 Code Assistant Implementation**: Build AI-powered development tools using your model infrastructure  
+* **4.4 Interactive Code Game**: Hands-on coding challenges with AI assistance
+* **4.5 Analytics & Monitoring**: Track usage, performance, and ROI across your model services
+* **4.6 MaaS Conclusion**: Review architecture patterns and scaling strategies
+
+**Key Skills**: Platform engineering, API design, centralized model serving, usage analytics, enterprise governance
+
+=== 🤖 Module 5: Agentic AI for Operations
+**Deploy intelligent automation for DevOps and system administration**
+
+* **5.1 MCP Server Integration**: Connect your models to live systems using Model Context Protocol servers for OpenShift and Slack integration
+* **5.2 Intelligent Automation**: Build AI agents that can troubleshoot, monitor, and manage infrastructure through natural language
+
+**Key Skills**: AI agents, system automation, operational AI, infrastructure as code, intelligent monitoring
+
+=== 📚 Reference Materials
+**Business and technical guides for real-world application**
+
+* **Enterprise Qualification Guide**: Framework for identifying and qualifying LLM optimization opportunities with enterprise clients
+* **Technical Deep Dives**: Comprehensive technical documentation on quantization methods and optimization strategies
+* **Model Comparison Examples**: Pre-compressed model performance comparisons and selection criteria
+
+=== 🎯 Learning Outcomes
+
+By the end of this workshop, you will be able to:
+
+* Deploy production-ready LLM inference servers on enterprise platforms
+* Evaluate and benchmark LLM systems for performance and accuracy  
+* Optimize vLLM configurations for specific use cases and constraints
+* Build centralized Model-as-a-Service platforms for enterprise consumption
+* Implement AI-powered development and operational automation tools
+* Create intelligent agents that can interact with live infrastructure
+* Design scalable, governed AI platforms that drive business value
+
+=== ⏱️ Workshop Format
+
+* **Duration**: Multi-day technical workshop program
+* **Format**: Mix of theory, hands-on labs, and real-world scenarios
+* **Prerequisites**: Basic familiarity with containers, Kubernetes, and machine learning concepts
+* **Environment**: Access to OpenShift cluster with GPU resources and external integrations
+* **Progression**: From basic deployment to advanced agentic automation
+
+
+
+

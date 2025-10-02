@@ -1,0 +1,218 @@
+= Minio Deployment Guide
+:toc:
+:sectnums:
+
+== What is it?
+Minio is a high-performance, S3 compatible object store. It can be deployed on a wide variety of platforms, and it comes in multiple flavors.
+
+== Why this guide?
+This guide is a very quick way of deploying the community version of Minio in order to quickly setup a fully standalone Object Store, in an OpenShift Cluster. This can then be used for various prototyping tasks that require Object Storage.
+
+[NOTE]
+====
+Nothing in this guide should be used in production-grade environments. Also, Minio is not included in RHOAI, and Red Hat does not provide support for Minio.
+====
+
+== Pre-requisites
+* Access to an OpenShift cluster
+* Namespace-level admin permissions, or permission to create your own project
+
+== Deploying Minio on OpenShift
+
+=== Create a Data Science Project (Optional)
+If you already have your own Data Science Project, or OpenShift project, you can skip this step.
+
+. If your cluster already has Red Hat OpenShift AI installed, you can use the Dashboard Web Interface to create a Data Science project.
+. Navigate to *Data Science Projects*
+. Click *Create Project*
+. Choose a name for your project (here, `Showcase`) and click *Create*
+
+
+Make sure to make a note of the Resource name, in case it's different from the name.
+
+=== Log on to your project in OpenShift Console
+. Go to your cluster's OpenShift Console
+. Use the *Administrator* view, not the *Developer* view
+. Navigate to *Workloads → Pods* and confirm the selected project is correct
+
+
+You now have a project in which to deploy Minio.
+
+=== Deploy Minio in your project
+. Click on the *+ (Import YAML)* button
+
+
+. Paste the following YAML:
+
+[source,yaml]
+----
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: minio-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  volumeMode: Filesystem
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: minio-secret
+stringData:
+  minio_root_user: minio
+  minio_root_password: minio123
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: minio-pvc
+      containers:
+        - name: minio
+          image: quay.io/minio/minio:latest
+          args:
+            - server
+            - /data
+            - --console-address
+            - :9090
+          env:
+            - name: MINIO_ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: minio_root_user
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: minio_root_password
+          ports:
+            - containerPort: 9000
+            - containerPort: 9090
+          volumeMounts:
+            - name: data
+              mountPath: /data
+              subPath: minio
+          resources:
+            limits:
+              cpu: 250m
+              memory: 1Gi
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          readinessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 30
+            periodSeconds: 5
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: minio-service
+spec:
+  ports:
+    - name: api
+      port: 9000
+      targetPort: 9000
+    - name: ui
+      port: 9090
+      targetPort: 9090
+  selector:
+    app: minio
+  type: ClusterIP
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: minio-api
+spec:
+  to:
+    kind: Service
+    name: minio-service
+  port:
+    targetPort: api
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: minio-ui
+spec:
+  to:
+    kind: Service
+    name: minio-service
+  port:
+    targetPort: ui
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+----
+
+. Press *Create*.
+
+You should see a running Minio pod and two routes:
+
+
+* The `-api` route is for programmatic access
+* The `-ui` route is for browser access
+
+== Creating a bucket in Minio
+
+=== Log in to Minio
+. Open the `minio-ui` Route URL in a browser
+. Log in with your credentials (default: `minio / minio123`)
+
+
+=== Create a bucket
+. Click *Create a Bucket*
+. Choose the name "guidellm-benchmark" and click *Create Bucket*
+
+
+
+== Create a matching Data Connection for Minio
+. In the RHOAI Dashboard, go to your Data Science Project
+. Click *Add data connection*
+. Select the *S3* option
+. Fill out the fields to match your Minio instance and bucket:
+
+Name:: My Data Connection
+Access Key:: minio
+Secret Key:: minio123
+Endpoint:: the API route in OpenShift (NOT the UI route)
+Region:: us-east-1
+Bucket:: guidellm-benchmark
+
+
+
+Now you can use this data connection in:
+* Workbenches
+* Model Serving
+* Pipelines
+
+

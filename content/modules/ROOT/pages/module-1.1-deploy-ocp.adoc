@@ -1,0 +1,24 @@
+:imagesdir: ../assets/images
+[#deploy-ocp]
+= Deploying RH Inference Server on OpenShift
+
+In this module, we will use Helm to deploy RH Inference Server on OpenShift. The chart we will use deploys [vLLM](https://docs.vllm.ai/en/latest/) with the IBM Granite **granite-3.3-2b-instruct** model, defaulting to using the [Red Hat AI Inference Server](https://docs.redhat.com/en/documentation/red_hat_ai_inference_server) official image.
+
+== Prerequisites
+
+* An OpenShift cluster with NVIDIA GPUs available (by default, configurable) and configured properly (e.g. the NVIDIA GPU Operator). **This is provided in the lab environment.**
+** This cluster should be your current context, e.g. you see the correct cluster when you run `oc whoami --show-server`
+** You need permission to create Namespaces and consume GPUs, but do not require higher privilege to deploy these charts
+
+=== Clone the Workshop Repository
+
+Clone the following repository, you will use it a lot over the course of our training:
+
+1. But first, log into your provided OpenShift environment via the ssh into your bastion.  This should be provided to you with the proper credentials. The lab is designed to be run completely from the bastion machine so long as you are in the proper cloned directory (the next command)
+
+[source,sh,role=execute]
+----
+git clone https://github.com/cskidmo/Intel_ETX_OCPAI_VLLM
+cd Intel_ETX_OCPAI_VLLM
+----
+
