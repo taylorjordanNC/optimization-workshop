@@ -2,7 +2,7 @@
 site:
   title: Model Optimization Workshop
   url: https://taylorjordanNC.github.io/optimization-workshop
-  start_page: modules::index.adoc
+  start_page: modules:ROOT:index.adoc
 
 content:
   sources:
